@@ -12,7 +12,14 @@ let readFile = () =>{
 }
 
 router.get("/",(req,res)=>{
-    res.send(readFile())
+    let students = readFile();
+    if(Object.keys(req.query).length != 0){
+    let queryUser = students.filter(student => 
+        student.hasOwnProperty("name") && student.name.toLowerCase() == req.query.name.toLowerCase())
+    res.send(queryUser)
+    }else{
+        res.send(readFile());
+    }
 })
 
 router.get("/:id",(req,res)=>{
